@@ -1,0 +1,38 @@
+[versions]
+archUnitVersion = "1.0.1"
+arrowStackVersion = "1.2.0"
+detektVersion = "1.23.1"
+# @keep is used for project setup
+jdkVersion = "17"
+junit5Version = "5.10.0"
+kotestArrowVersion = "1.3.3"
+kotestVersion = "5.6.2"
+kotlinVersion = "1.9.0"
+ktlintVersion = "11.5.1"
+logbackVersion = "1.4.11"
+mockitoKotlinVersion = "5.1.0"
+pitestJunit5Version = "1.2.0"
+pitestVersion = "1.9.11"
+versionCatalogUpdateVersion = "0.8.1"
+versionUpdateVersion = "0.47.0"
+
+[libraries]
+archUnitJunit5 = { module = "com.tngtech.archunit:archunit-junit5", version.ref = "archUnitVersion" }
+arrowCore = { module = "io.arrow-kt:arrow-core" }
+arrowStack = { module = "io.arrow-kt:arrow-stack", version.ref = "arrowStackVersion" }
+detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektVersion" }
+junit5Engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5Version"}
+kotestArrowAssert = { module = "io.kotest.extensions:kotest-assertions-arrow", version.ref = "kotestArrowVersion" }
+kotestCoreAssertion = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestVersion" }
+kotestRunnerJunit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestVersion" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVersion"}
+mockitoKotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlinVersion" }
+pitestJunit5 = { module = "org.pitest:pitest-junit5-plugin", version.ref = "pitestJunit5Version" }
+
+[plugins]
+catalogUpdate = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdateVersion" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detektVersion" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion" }
+pitest = { id = "info.solidsoft.pitest", version.ref = "pitestVersion" }
+versionUpdate = { id = "com.github.ben-manes.versions", version.ref = "versionUpdateVersion" }
