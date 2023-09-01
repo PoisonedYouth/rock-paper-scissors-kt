@@ -95,3 +95,4 @@ More information can be found in the Github repository of the [project](https://
 - detekt
 - jacoco
 - pitest (Mutation testing)
+- ArchUnit (Enforcing Architecture)

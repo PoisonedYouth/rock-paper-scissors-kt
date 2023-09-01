@@ -1,11 +1,15 @@
 package com.poisonedyouth.rps.application
 
+import arrow.core.left
+import arrow.core.right
 import com.poisonedyouth.rps.domain.game.Game
 import com.poisonedyouth.rps.domain.game.GameResult
 import com.poisonedyouth.rps.domain.game.game.GameInput
 import com.poisonedyouth.rps.domain.player.PlayOption
 import com.poisonedyouth.rps.domain.player.Player
 import com.poisonedyouth.rps.domain.player.RoundResultStore
+import com.poisonedyouth.rps.domain.storage.GameResultStorage
+import com.poisonedyouth.rps.failure.Failure
 import io.kotest.assertions.arrow.core.shouldBeRight
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
@@ -17,7 +21,8 @@ import org.mockito.kotlin.whenever
 class TerminalGameExecutorTest {
 
     private val game: Game = mock()
-    private val gameExecutor: TerminalGameExecutor = TerminalGameExecutor(game)
+    private val gameResultStorage: GameResultStorage = mock()
+    private val gameExecutor: TerminalGameExecutor = TerminalGameExecutor(game, gameResultStorage)
 
     @Test
     fun `execute does not play game when player1 input is invalid`() {
@@ -54,7 +59,7 @@ class TerminalGameExecutorTest {
     }
 
     @Test
-    fun `execute plays game when input is valid`() {
+    fun `execute does not fail when saving to storage fails`() {
         // given
         val gameInput = GameInput(
             player1Name = "Rock Player",
@@ -63,11 +68,15 @@ class TerminalGameExecutorTest {
             player2AvailableOptions = listOf(PlayOption.ROCK, PlayOption.PAPER, PlayOption.SCISSORS)
         )
 
+        val gameResult = GameResult(
+            player1Result = "Rock Player" to RoundResultStore(),
+            player2Result = "Random Player" to RoundResultStore()
+        )
         whenever(game.play(any(), any(), any())).thenReturn(
-            GameResult(
-                player1Result = "Rock Player" to RoundResultStore(),
-                player2Result = "Random Player" to RoundResultStore()
-            )
+            gameResult
+        )
+        whenever(gameResultStorage.saveGameResult(gameResult)).thenReturn(
+            Failure.GenericFailure(RuntimeException("Failed!")).left()
         )
 
         // when
@@ -85,5 +94,43 @@ class TerminalGameExecutorTest {
             ).shouldBeRight(),
             rounds = ROUNDS
         )
+        verify(gameResultStorage).saveGameResult(gameResult)
+    }
+
+    @Test
+    fun `execute plays game when input is valid`() {
+        // given
+        val gameInput = GameInput(
+            player1Name = "Rock Player",
+            player1AvailableOptions = listOf(PlayOption.ROCK),
+            player2Name = "Random Player",
+            player2AvailableOptions = listOf(PlayOption.ROCK, PlayOption.PAPER, PlayOption.SCISSORS)
+        )
+
+        val gameResult = GameResult(
+            player1Result = "Rock Player" to RoundResultStore(),
+            player2Result = "Random Player" to RoundResultStore()
+        )
+        whenever(game.play(any(), any(), any())).thenReturn(
+            gameResult
+        )
+        whenever(gameResultStorage.saveGameResult(any())).thenReturn(Unit.right())
+
+        // when
+        gameExecutor.execute(gameInput)
+
+        // then
+        verify(game).play(
+            player1 = Player.createFrom(
+                name = gameInput.player1Name,
+                availableOptions = gameInput.player1AvailableOptions
+            ).shouldBeRight(),
+            player2 = Player.createFrom(
+                name = gameInput.player2Name,
+                availableOptions = gameInput.player2AvailableOptions
+            ).shouldBeRight(),
+            rounds = ROUNDS
+        )
+        verify(gameResultStorage).saveGameResult(gameResult)
     }
 }

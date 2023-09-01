@@ -6,6 +6,7 @@ import com.poisonedyouth.rps.domain.game.game.GameExecutor
 import com.poisonedyouth.rps.domain.game.game.GameInput
 import com.poisonedyouth.rps.domain.player.Player
 import com.poisonedyouth.rps.domain.player.RoundResultStore
+import com.poisonedyouth.rps.domain.storage.GameResultStorage
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -14,7 +15,8 @@ private val logger: Logger = LoggerFactory.getLogger(TerminalGameExecutor::class
 const val ROUNDS = 100
 
 class TerminalGameExecutor(
-    private val game: Game
+    private val game: Game,
+    private val gameResultStorage: GameResultStorage
 ) : GameExecutor {
 
     override fun execute(gameInput: GameInput) {
@@ -34,6 +36,9 @@ class TerminalGameExecutor(
         }
 
         val gameResult = game.play(player1, player2, ROUNDS)
+        gameResultStorage.saveGameResult(gameResult).onLeft {
+            logger.warn("Unable to store game result to storage because of '${it.message}'.")
+        }
         logger.info(gameResult.player1Result.createResultString())
         logger.info(gameResult.player2Result.createResultString())
     }
