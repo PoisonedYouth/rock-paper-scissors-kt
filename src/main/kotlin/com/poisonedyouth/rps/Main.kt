@@ -4,7 +4,7 @@ import com.poisonedyouth.rps.application.GameFactory
 import com.poisonedyouth.rps.application.GameResultFileStorage
 import com.poisonedyouth.rps.application.GameType
 import com.poisonedyouth.rps.application.TerminalGameExecutor
-import com.poisonedyouth.rps.domain.game.game.GameInput
+import com.poisonedyouth.rps.domain.game.GameInput
 import com.poisonedyouth.rps.domain.player.PlayOption
 import java.nio.file.Paths
 

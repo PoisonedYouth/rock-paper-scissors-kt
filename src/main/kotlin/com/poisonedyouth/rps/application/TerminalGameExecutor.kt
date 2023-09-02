@@ -2,8 +2,8 @@ package com.poisonedyouth.rps.application
 
 import arrow.core.getOrElse
 import com.poisonedyouth.rps.domain.game.Game
-import com.poisonedyouth.rps.domain.game.game.GameExecutor
-import com.poisonedyouth.rps.domain.game.game.GameInput
+import com.poisonedyouth.rps.domain.game.GameExecutor
+import com.poisonedyouth.rps.domain.game.GameInput
 import com.poisonedyouth.rps.domain.player.Player
 import com.poisonedyouth.rps.domain.player.RoundResultStore
 import com.poisonedyouth.rps.domain.storage.GameResultStorage

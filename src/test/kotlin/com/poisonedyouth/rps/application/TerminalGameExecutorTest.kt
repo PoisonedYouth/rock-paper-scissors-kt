@@ -3,8 +3,8 @@ package com.poisonedyouth.rps.application
 import arrow.core.left
 import arrow.core.right
 import com.poisonedyouth.rps.domain.game.Game
+import com.poisonedyouth.rps.domain.game.GameInput
 import com.poisonedyouth.rps.domain.game.GameResult
-import com.poisonedyouth.rps.domain.game.game.GameInput
 import com.poisonedyouth.rps.domain.player.PlayOption
 import com.poisonedyouth.rps.domain.player.Player
 import com.poisonedyouth.rps.domain.player.RoundResultStore

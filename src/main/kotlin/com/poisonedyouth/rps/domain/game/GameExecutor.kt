@@ -1,4 +1,4 @@
-package com.poisonedyouth.rps.domain.game.game
+package com.poisonedyouth.rps.domain.game
 
 import com.poisonedyouth.rps.domain.player.PlayOption
 
