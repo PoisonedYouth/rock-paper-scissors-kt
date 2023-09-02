@@ -27,7 +27,7 @@ class GameResultFileStorageTest {
         )
 
         // when
-        gameResultFileStorage.saveGameResult(gameResult)
+        gameResultFileStorage.saveGameResult(gameResult.toGameResultDto())
 
         // then
         val actual = Files.readAllLines(storageFilePath)
@@ -55,7 +55,7 @@ class GameResultFileStorageTest {
         )
 
         // when
-        gameResultFileStorage.saveGameResult(gameResult)
+        gameResultFileStorage.saveGameResult(gameResult.toGameResultDto())
 
         // then
         val actual = Files.readAllLines(storageFilePath)

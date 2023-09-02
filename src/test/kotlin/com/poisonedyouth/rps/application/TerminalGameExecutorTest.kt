@@ -9,6 +9,7 @@ import com.poisonedyouth.rps.domain.player.PlayOption
 import com.poisonedyouth.rps.domain.player.Player
 import com.poisonedyouth.rps.domain.player.RoundResultStore
 import com.poisonedyouth.rps.domain.storage.GameResultStorage
+import com.poisonedyouth.rps.domain.storage.toGameResultDto
 import com.poisonedyouth.rps.failure.Failure
 import io.kotest.assertions.arrow.core.shouldBeRight
 import org.junit.jupiter.api.Test
@@ -75,7 +76,7 @@ class TerminalGameExecutorTest {
         whenever(game.play(any(), any(), any())).thenReturn(
             gameResult
         )
-        whenever(gameResultStorage.saveGameResult(gameResult)).thenReturn(
+        whenever(gameResultStorage.saveGameResult(gameResult.toGameResultDto())).thenReturn(
             Failure.GenericFailure(RuntimeException("Failed!")).left()
         )
 
@@ -94,7 +95,7 @@ class TerminalGameExecutorTest {
             ).shouldBeRight(),
             rounds = ROUNDS
         )
-        verify(gameResultStorage).saveGameResult(gameResult)
+        verify(gameResultStorage).saveGameResult(gameResult.toGameResultDto())
     }
 
     @Test
@@ -131,6 +132,6 @@ class TerminalGameExecutorTest {
             ).shouldBeRight(),
             rounds = ROUNDS
         )
-        verify(gameResultStorage).saveGameResult(gameResult)
+        verify(gameResultStorage).saveGameResult(gameResult.toGameResultDto())
     }
 }
