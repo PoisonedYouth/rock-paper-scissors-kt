@@ -96,3 +96,11 @@ More information can be found in the Github repository of the [project](https://
 - jacoco
 - pitest (Mutation testing)
 - ArchUnit (Enforcing Architecture)
+
+## Next Steps
+- Add Sonarqube for publishing code analysis result + quality gate.
+- Add dependency check plugin (https://github.com/jeremylong/DependencyCheck)
+- Extend pipeline script with publishing code coverage and test results.
+- Replace file storage by database.
+- Replace printing result to terminal by REST endpoint.
+- Added Koin dependency injection framework.

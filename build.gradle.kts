@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.poisonedyouth"
-version = "1.0-SNAPSHOT"
+version = "0.0.1"
 
 application {
     mainClass.set("com.poisonedyouth.rps.MainKt")
